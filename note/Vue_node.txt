@@ -1,0 +1,43 @@
+1、Vue指令
+   v-text、{{}}、v-html:都能把值附在标签里，插值表达式和v-text不会将数据解析成html，v-html可以解析数据中的html标签。
+   v-bind:可以将数据绑定在标签的属性上 简写为:
+   v-on:可以给元素添加绑定事件，不需要给元素设置id和添加onclick事件;v-on:可以简写成@
+   v-model:实现双向数据绑定，.lazy;.number可以限制input的值为数字；.trim去除空格.
+   v-for:遍历普通数组、对象的属性、数字
+   v-if、v-show:v-if会操作dom，删除或者添加元素，性能消耗大。v-show只是给元素加样式display：none
+2、事件修饰符
+    ●.stop:阻止事件冒泡
+    ●.prevent:阻止默认事件，比如a标签的href属性
+    ●.capture:添加事件监听器使用捕获模式(反向冒泡)
+    ●.self:事件在该元素本事触发时触发
+    ●.once:只触发一次
+3、样式控制
+    通过v-bind:指令 <div :class="['thin','hide',{'active':flag}]"></div>
+    通过内联样式: <div :style="{color:'red'}"></div>
+4、计算属性：computed
+   computed只会在第一次渲染页面的时候执行，之后不会执行。methods每次都会执行。
+5、监听属性
+    vm.$watch('counter', function(nval, oval) {
+        alert('计数器值的变化 :' + oval + ' 变为 ' + nval + '!');
+    });
+    watch : {
+            kilometers:function(val) {
+                this.kilometers = val;
+                this.meters = this.kilometers * 1000
+            },
+            meters : function (val) {
+                this.kilometers = val/ 1000;
+                this.meters = val;
+            }
+        }
+6、自定义组件：directives
+    directives: {
+        // 注册一个局部的自定义指令 v-focus
+        focus: {
+          // 指令的定义
+          inserted: function (el) {
+            // 聚焦元素
+            el.focus()
+          }
+        }
+      }

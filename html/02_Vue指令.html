@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue指令学习</title>
+    <script src="../lib/vue.min.js"></script>
+
+    <style type="text/css">
+        [v-cloak] {
+            display: none;
+        }
+
+        .tip {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div id="div_01">
+
+    <!-- v-cloak可以使页面数据在没有加载出来时，不至于显示{{msg}} -->
+    <p v-cloak>{{msg}}</p>
+
+    <!-- v-text也可以防止闪烁，会覆盖标签元素的值 -->
+    <p v-text="msg2"></p>
+
+    <!-- v-html可以解析数据中的html标签 -->
+    <p v-html="msg2"></p>
+
+    <!-- v-bind可以将数据绑定在标签的属性上 -->
+    <button v-bind:title="title">点击</button>
+
+    <!-- v-bind: 可以简写成: -->
+    <button :title="title + '简写测试'">点击</button>
+    <br>
+
+    <!-- v-on可以给元素添加绑定事件，不需要给元素设置id和添加onclick事件;v-on:可以简写成@ -->
+    <button v-on:click="buttonClick" v-on:mouseenter="hoverOn" @mouseleave="hoverOver">v-on 测试</button>
+    <label class="tip">提示</label>
+
+    <!-- v-model可以给表单元素绑定值（双向绑定） -->
+    <input type="text" v-model="msg3">
+
+    <p/>
+
+    <!-- v-for循环普通数组 -->
+    <select v-model="select">
+        <option></option>
+        <option v-for="option in options" :value="option.code" v-text="option.name"></option>
+    </select>
+
+    <p/>
+
+    <!-- v-for遍历对象属性 -->
+    <ul>
+        <li v-for="(value,key) in student">{{value}}</li>
+    </ul>
+
+    <!-- v-for遍历数字 -->
+    <ul>
+        <li v-for="i in count">{{i}}</li>
+    </ul>
+
+    <!-- v-for中使用key-->
+    code:<input type="text" v-model="id">
+    name:<input type="text" v-model="name">
+    <input type="button" value="添加" @click="addOptions">
+    <ul>
+        <li v-for="option in options" :value="option.code" v-text="option.name" :key="option.code"></li>
+    </ul>
+
+    <!-- v-if标签，控制元素是否显示 -->
+    <input type="button" value="显示" @click="change">
+    <p v-if="flag">v-if控制的元素</p>
+    <p v-show="flag">v-if控制的元素</p>
+
+
+</div>
+<script src="../lib/jQuery-3.3.1.js"></script>
+<script>
+    var vue = new Vue({
+        el: "#div_01",  //当前的vue对象空值页上的哪个区域
+        data: {  //存放el中用到的数据
+            msg: "Vue指令学习:v-cloak、v-text、v-html、v-bind、v-on",
+            msg2: "<a>v-html测试</a>",
+            title: "测试v-bind",
+            msg3: "v-model测试",
+            options: [
+                {"code": 1, "name": "name1"},
+                {"code": 2, "name": "name2"},
+                {"code": 3, "name": "name3"},
+            ],
+            select: 2,
+            student: {
+                name: "张三",
+                age: 25,
+                score: 99
+            },
+            count: 10,
+            id: "",
+            name: "",
+            flag: false
+        },
+        methods: {
+            buttonClick: function () {
+                alert("测试v-on");
+            },
+            hoverOn: function () {
+                $(".tip").css("display", "block");
+            },
+            hoverOver: function () {
+                $(".tip").css("display", "none");
+            },
+            addOptions: function () {
+                var _this = this;
+                _this.options.push({"code": _this.id, "name": _this.name})
+            },
+            change() {
+                this.flag = !this.flag;
+            }
+        }
+    });
+</script>
+</body>
+</html>

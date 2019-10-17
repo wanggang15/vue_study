@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue跑马灯效果</title>
+    <script src="../lib/vue.min.js"></script>
+</head>
+<body>
+
+<div id="div_01">
+    <p>{{title}}</p>
+    <input type="button" :value="btn01" @click="start">
+    <input type="button" :value="btn02" @click="end">
+    <p v-text="msg"></p>
+</div>
+
+
+<script src="../lib/jQuery-3.3.1.js"></script>
+<script>
+    var vue = new Vue({
+        el: "#div_01",  //当前的vue对象空值页上的哪个区域
+        data: {  //存放el中用到的数据
+            title: "跑马灯效果展示",
+            btn01: "浪起来",
+            btn02: "猥琐发育",
+            msg: "浪起来，浪起来......",
+            interval: null
+        },
+        methods: {
+            start: function () {
+                var _this = this;
+                if (_this.interval == null) {
+                    _this.interval = setInterval(function () {
+                        var msg = _this.msg;
+                        var head = msg.substring(0, 1);
+                        var end = msg.substring(1);
+                        _this.msg = end + head;
+                    }, 500)
+                }
+            },
+            end: function () {
+                clearInterval(this.interval);
+                this.interval = null;
+            }
+        }
+    });
+</script>
+</body>
+</html>

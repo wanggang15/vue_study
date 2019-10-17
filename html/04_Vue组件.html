@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue组件</title>
+    <link rel="stylesheet" href="../lib/bootstrap.css">
+    <script src="../lib/vue.min.js"></script>
+</head>
+<style>
+    #app,table thead tr th {
+        text-align: center;
+    }
+    #app{
+        margin-top: 20px;
+    }
+</style>
+<body>
+
+
+
+<div id="app">
+    <!--<temp :peoples="peoples"></temp>-->
+    <div class="col-md-12">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#teacher" aria-controls="teacher" role="tab" data-toggle="tab">老师</a></li>
+                <li role="presentation"><a href="#student" aria-controls="student" role="tab" data-toggle="tab">学生</a></li>
+                <li role="presentation"><a href="#master" aria-controls="master" role="tab" data-toggle="tab">校长</a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="teacher"><temp :peoples="teacher"></temp></div>
+                <div role="tabpanel" class="tab-pane" id="student"><temp :peoples="student"></temp></div>
+                <div role="tabpanel" class="tab-pane" id="master"><temp :peoples="master"></temp></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="../lib/jQuery-3.3.1.js"></script>
+<script src="../lib/bootstrap.js"></script>
+<script>
+    // 将对象的值赋值给vue实例
+    Vue.prototype.setVueData = function (data) {
+        let _this = this;
+        for(let key in data){
+            if(data.hasOwnProperty(key))
+                _this.$set(key, data[key]);
+        }
+    };
+
+    var temp = {
+        props:{
+            peoples:[]
+        },
+        template: '<div>' +
+        '    <div>' +
+        '        <table class="table table-bordered table-hover table-striped">' +
+        '            <thead>' +
+        '                <tr>' +
+        '                    <th>姓名</th>' +
+        '                    <th>性别</th>' +
+        '                    <th>年龄</th>' +
+        '                </tr>' +
+        '            </thead>' +
+        '            <tbody>' +
+        '                <tr v-for="people in peoples">' +
+        '                    <td v-text="people.name"></td>' +
+        '                    <td v-text="people.sex"></td>' +
+        '                    <td v-text="people.age"></td>' +
+        '                </tr>' +
+        '            </tbody>' +
+        '        </table>' +
+        '    </div>' +
+        '</div>',
+        methods:{
+
+        }
+    };
+
+    // 注册
+    // Vue.component('child', temp);
+    // 创建根实例
+     var vue =  new Vue({
+        el: '#app',
+        components:{
+            temp
+        },
+        data:{
+            teacher:[
+                {
+                    name:'老师1',
+                    sex:'男',
+                    age:25
+                },
+                {
+                    name:'老师2',
+                    sex:'男',
+                    age:25
+                }
+            ],
+            student:[
+                {
+                    name:'学生1',
+                    sex:'男',
+                    age:25
+                },
+                {
+                    name:'学生2',
+                    sex:'男',
+                    age:25
+                }
+            ],
+            master:[
+                {
+                    name:'校长1',
+                    sex:'男',
+                    age:25
+                },
+                {
+                    name:'校长2',
+                    sex:'男',
+                    age:25
+                }
+            ],
+            msg:'hhhhhhh'
+        }
+    })
+
+</script>
+</body>
+</html>
